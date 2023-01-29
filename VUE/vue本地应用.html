@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue基础</title>
+    <style>
+        .active{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- v-text指令：设置标签的内容（textContent） -->
+        <h2 v-text="message+'!'">??</h2>
+        <h2>{{info}}??</h2>
+        <!-- v-html指令：设置元素的innerHTML,内容中有html结构会被解析为标签 -->
+        <p v-html="content"></p>
+        <!-- v-on指令：为元素绑定事件 -->
+        <input type="button" value="单机" v-on:click="test" title="?">
+        <input type="button" value="简写单机" @click="test">
+        <input type="button" value="双击" @dblclick="test">
+        <!-- v-show指令：根据真假切换元素的显示状态，改变元素的display属性 -->
+        <h2 v-show="age >= 18">v-show</h2>
+        <!-- v-if指令：根据表达式的真假切换元素的显示状态 -->
+        <p v-if="age >= 18">v-if</p>
+        <!-- v-bind:为元素绑定属性，完整写法为v-bind:属性名，简写为:属性名 -->
+        <img v-bind:src="imgSrc" alt="" :class="{active:isActive}">
+        <img :src="imgSrc" alt="" :class="isActive ? 'active' : ''" @click = "toggleActive">
+        <!-- v-for:根据数据生成列表结构 -->
+        <ul>
+            <li v-for="(item,index) in arr">
+                第{{index+1}}个校区:{{item}}
+            </li>
+        </ul>
+        <h2 v-for="item in vegetables" v-bind:title="item.name">
+            {{item.name}}
+        </h2>
+        <input type="button" value="添加数据" @click="add">
+        <input type="button" value="移除数据" @click="remove">
+        <br>
+        <!-- 事件绑定的方法写成函数调用的形式，可以传入自定义参数 -->
+        <input type="button" value="点击" @click="does(666,'老铁')">
+        <!-- 事件后跟上.修饰符可以对事件进行限制 -->
+        <input type="text" @keyup.enter="sayHi">
+        <br>
+        <!-- v-model:便捷地设置和获取表单元素的值，绑定的数据回和表单元素值相关联 -->
+        <input type="text" v-model="message1">
+        <h2>{{message1}}</h2>
+        <input type="button" value="修改message1" @click="setM">
+    </div>
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: "Hello Vue",
+                info: "黑马程序员",
+                content: "<a href='http://www.itheima.com'>黑马程序员</a>",
+                age: 20,
+                imgSrc:"http://www.itheima.com/images/logo.png",
+                isActive: false,
+                arr:["北京","上海","广州","深圳"],
+                vegetables:[
+                    {name:"番茄炒蛋"},
+                    {name:"辣椒炒肉"}
+                ],
+                message1:"李岳峰"
+            },
+            methods: {
+                test:function(){
+                    alert("点我干嘛？");
+                },
+                toggleActive:function(){
+                    this.isActive = !this.isActive;
+                },
+                add:function(){
+                    this.vegetables.push({name:"炸鸡"});
+                },
+                remove:function(){
+                    this.vegetables.shift();
+                },
+                does:function(p1,p2){
+                    alert(p1+' '+p2);
+                },
+                sayHi:function(){
+                    alert("吃了没？");
+                },
+                setM:function(){
+                    this.message1 = "芜湖"
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+1. Linux系统简介
+   - Unix与Linux发展史
+   - 开源软件简介
+   - Linux应用领域
+   - Linux学习方法
+2. Linux系统安装
+   - VMware虚拟机安装与使用
+   - 系统分区
+   - Linux系统安装
+   - 远程登录管理工具
+3. 初学者建议
+4. Linux常用命令
+   - 文件处理命令
+      - 命令格式与目录处理命令ls
+        - 命令格式：命令 [-选项] [参数]。 例：ls -la -/etc
+        - 说明：1. 个别命令使用不遵守此格式。2.当有多个选项时，可以写在一起。3.简化选项与完整选项，-a 等于 --all
+        - 目录处理命令: ls
+          - 命令名称：ls
+          - 命令英文原意：list
+          - 命令所在路径：/bin/ls
+          - 执行权限：所有用户
+          - 功能描述：显示目录文件
+          - 语法：ls 选项[-ald] [文件或目录]
+            - -a 显示所有文件，包括隐藏文件
+            - -l 详细信息显示
+            - -d 查看目录属性
+          - ls; ls -l; ls -lh; ls -ld
+          - -rw-r--r--:
+            - (-)文件类型, - 二进制文件，d 目录，l 软链接文件
+            - rw-r--r-- （u所有者，g所属组，o其他人）（r读，w写，x执行）
+      - 目录处理命令
+        - 目录处理命令:mkdir
+          - 命令名称：mkdir
+          - 命令英文原意：make directories
+          - 命令所在路径：/bin/mkdir
+          - 执行权限：所有用户
+          - 语法：mkdir -p[目录名]
+          - 功能描述：创建新目录，-p 递归创建
+          - 范例：$ mkdir -p /tmp/Japan/boduo
+                 \$ mkdir /tmp/Japan/longze /tmp/Japan/cangjing
+        - 目录处理命令:cd
+          - 命令名称：cd
+          - 命令英文原意：change directory
+          - 命令所在路径：shell内置命令
+          - 执行权限：所有用户
+          - 语法：cd[目录]
+          - 功能描述：切换目录
+          - 范例：$ cd /tmp/Japan/boduo 切换到指定目录
+                 \$ cd .. 回到上一级目录
+        - 目录处理命令:pwd
+          - 命令名称：pwd
+          - 命令英文原意：print working directory
+          - 命令所在路径：/bin/pwd
+          - 执行权限：所有用户
+          - 语法：pwd
+          - 功能描述：显示当前目录
+          - 范例：$ pwd
+                 /tmp/Japan
+        - 目录处理命令:rmdir
+          - 命令名称：rmdir
+          - 命令英文原意：remove empty directories
+          - 命令所在路径：/bin/rmdir
+          - 执行权限：所有用户
+          - 语法：rmdir[目录名]
+          - 功能描述：删除空目录
+          - 范例：$ rmdir /tmp/Japan/boduo
+        - 目录处理命令:cp
+          - 命令名称：cp
+          - 命令英文原意：copy
+          - 命令所在路径：/bin/cp
+          - 执行权限：所有用户
+          - 语法: cp -rp [原文件或目录] [目标目录]
+                       -r 复制目录
+                       -p 保留文件属性
+          - 功能描述：复制文件或目录，可以复制过去并且改目录名
+        - 目录处理命令:mv
+          - 命令名称：mv
+          - 命令英文原意：move
+          - 命令所在路径：/bin/mv
+          - 执行权限：所有用户
+          - 语法: mv [原文件或目录] [目标目录]
+          - 功能描述：剪切文件、改名
+        - 目录处理命令：rm
+          - 命令名称：rm
+          - 命令英文原意：remove
+          - 命令所在路径：/bin/rm
+          - 执行权限：所有用户
+          - 语法：rm -rf [文件或目录]
+                    -r 删除目录
+                    -f 强制删除
+          - 功能描述：剪切文件、改名
+      - 文件处理命令
+        - touch
+          - 命令名称：touch
+          - 命令所在路径：/bin/touch
+          - 执行权限：所有用户
+          - 语法：touch [文件名]
+          - 功能描述：创建空文件
+          - 范例：$ touch Japanlovestory.list
+        - cat
+          - 命令名称：cat
+          - 命令所在路径：/bin/cat
+          - 执行权限：所有用户
+          - 语法：cat [文件名]
+          - 功能描述：显示文件内容
+                      -n 显示行号
+          - 范例：$ cat /etc/issue
+                  \$ -n /etc/services
+        - tac
+          - 命令名称：tac
+          - 命令所在路径：/usr/bin/tac
+          - 执行权限：所有用户
+          - 语法：tac [文件名]
+          - 功能描述：显示文件内容(反向列示)
+          - 范例：$ tac /etc/issue
+        - more
+          - 命令名称：more
+          - 命令所在路径：/bin/more
+          - 执行权限：所有用户
+          - 语法：more [文件名]
+                  (空格)或f：翻页
+                  (Enter)：换行
+                  q或Q：退出
+          - 功能描述：分页显示文件内容
+          - 范例：$ more /etc/services
+        - less
+          - 命令名称：less
+          - 命令所在路径：/usr/bin/less
+          - 执行权限：所有用户
+          - 语法：less [文件名]
+          - 功能描述：分页显示文件内容(可向上翻页)
+          - 范例：$ less /etc/services
+          - 搜索：/xxx, n 找下一处
+        - head
+          - 命令名称：head
+          - 命令所在路径：/usr/bin/head
+          - 执行权限：所有用户
+          - 语法：head [文件名]
+          - 功能描述：显示文件前面几行
+                      -n 指定行数 (默认显示前十行)
+          - 范例：$ head -n 20 /etc/services
+        - tail
+          - 命令名称：tail
+          - 命令所在路径：/usr/bin/tail
+          - 执行权限：所有用户
+          - 语法：tail [文件名]
+          - 功能描述：显示文件后面几行
+                      -n 指定行数
+                      -f 动态显示文件末尾内容
+          - 范例：$ tail -n 18 /etc/services
+      - 链接命令
+        - ln
+          - 命令名称：ln
+          - 命令英文原意：link
+          - 命令所在路径：/bin/ln
+          - 执行权限：所有用户
+          - 语法：ln -s [原文件] [目标文件]
+                    -s 创建软链接
+          - 功能描述：生成链接文件
+          - 软链接特征：类似Windows快捷方式
+            - lrwxrwxrwx， 软链接文件权限都为rwxrwxrwx
+            - 文件大小-很小，只是符号链接
+            - /tmp/issue.soft -> /etc/issue，箭头指向源文件
+          - 硬链接特征：
+            - 拷贝cp -p + 同步更新。 （echo "www.lampbrother.net" >> /etc/issue）
+            - 通过i节点识别
+            - 不能跨分区
+            - 不能针对目录使用
+   - 权限管理命令
+     - 权限管理命令chmod
+       - chmod
+         - 命令名称：chmod
+         - 命令英文原意：change the permissions mode of a file
+         - 命令所在路径：/bin/chmod
+         - 执行权限：所有用户
+         - 语法：chmod [{ugoa}{+-=}{rwx}] [文件或目录]
+                  chmod 640 xxx.txt
+                  [mode=421] [文件或目录]
+                  （权限的数字表示：r --- 4, w --- 2, x --- 1）
+                  （rwxrw-r--：764）
+                  -R 递归修改
+         - 功能描述：改变文件或目录权限
+     - 其他权限管理命令
+       - 权限管理命令：chown
+         - 命令名称：chown
+         - 命令英文原意：change file ownership
+         - 命令所在路径：/bin/chown
+         - 执行权限：所有用户
+         - 语法：chown [用户] [文件或目录]
+         - 功能描述：改变文件或目录的所有者
+         - 范例：$ chown shenchao fengjie (改变文件fengjie的所有者为shenchao)
+       - 权限管理命令：chgrp
+         - 命令名称：chgrp
+         - 命令英文原意：change file group ownership
+         - 命令所在路径：/bin/chgrp
+         - 执行权限：所有用户
+         - 语法：chgrp [用户组] [文件或目录]
+         - 功能描述：改变文件或目录的所属组
+         - 范例：$ chgrp lampbrother fengjie (改变文件fengjie的所属组为lampbrother)
+       - 权限管理命令：umask
+         - 命令名称：umask
+         - 命令英文原意：the user file-creation mask
+         - 命令所在路径：Shell内置命令
+         - 执行权限：所有用户
+         - 语法：umask [-S]
+                -S：以rwx形式显示新建文件默认权限
+         - 功能描述：显示、设置文件的默认权限
+         - 范例：$ umask -S
+   - 文件搜索命令
+     - 文件搜索命令find
+   - 帮助命令
+   - 用户管理命令
+   - 压缩解压命令
+   - 网络命令
+   - 关机重启命令
