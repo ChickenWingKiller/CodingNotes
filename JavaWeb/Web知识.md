@@ -21,7 +21,10 @@ JavaWeb：是用Java技术来解决相关web互联网领域的技术栈
 - 请求数据分为三个部分：
   1. **请求行**：请求数据的第一行。其中GET表示请求方式, / 表示请求资源路径, HTTP/1.1 表示协议版本
   2. **请求头**：第二行开始，格式为key: value形式。
-  3. **请求体**：POST请求的最后一部分，存放请求参数。和响应头之间有一行空行。
+  3. **请求体**：POST请求的最后一部分，存放请求参数。和请求头之间有一行空行。
+- Get请求和Post请求区别：
+  1. Get请求的请求参数在请求行中，没有请求体。
+  2. Get请求的请求参数大小有限制，Post没有。
 ### HTTP-响应数据格式
 - 相应数据分为3部分
   1. **相应行**：相应数据的第一行。其中HTTP/1.1代表协议版本，200代表相应状态码，OK代表状态码描述。
@@ -84,18 +87,18 @@ JavaWeb：是用Java技术来解决相关web互联网领域的技术栈
     <scope>provided</scope>
   </dependency>
   ```
-  2. 创建：定义一个类，实现Servlet接口，并重写接口中所有方法，并在service方法中输出一句话
+  1. 创建：定义一个类，实现Servlet接口，并重写接口中所有方法，并在service方法中输出一句话
   ```java
   public class ServletDemo implements Servlet(){
     public void service(){}
   }
   ```
-  3. 配置：在类上使用@WebServlet注解，配置该Servlet的访问路径
+  1. 配置：在类上使用@WebServlet注解，配置该Servlet的访问路径
   ```java
   @WebServlet("/demo")
   public class ServletDemo implements Servlet(){
   ```
-  4. 访问：启动Tomcat，浏览器输入URL访问该Servlet
+  1. 访问：启动Tomcat，浏览器输入URL访问该Servlet
   ```url
   http://localhost:8080/web-demo/demo1
   ```
@@ -137,9 +140,9 @@ Servlet由Web服务器创建，Servlet方法由Web服务器调用。
       配置路径：`@WebServlet("*.do")` (不能以斜杠开头)
       访问路径：`localhost:8080/web-demo/aaa.do`、`localhost:8080/web-demo/bbb.do`
      4. 任意匹配 
-      配置路径：`@WebServlet("/")`、`@WebServlet("/*")`
+      配置路径：`@WebServlet("/")`、`@WebServlet("/*")` (/*的优先级高于/)
       访问路径：`localhost:8080/web-demo/hehe`、`localhost:8080/web-demo/haha`
-      - / 和 */ 区别：
+      - / 和 /* 区别：
         - 当我们的项目中的Servlet配置了"/"，会覆盖掉tomcat中的DefaultServlet，当其他的url-pattern都匹配不上时都会走这个Servlet。无法访问静态资源。如果自定义了“/”或“/*”的urlPattern，就访问不了静态资源了。
         - 当我们的项目中配置了"/*",意味着匹配任意访问路径
       - 优先级：精确路径>目录路径>扩展名路径>/*>/
@@ -183,9 +186,10 @@ Servlet由Web服务器创建，Servlet方法由Web服务器调用。
       - `String[] getParameterValues(String name)` 根据名称获取参数值（数组）
       - `String getParameter(String name)` 根据名称获取参数值（单个值）
     - 解决post请求方式中文乱码问题：`request.setCharacterEncoding("UTF-8");` 设置字符输入流的编码
+    - 解决get请求方式中文乱码问题：先编码，再解码。`new String(username.getBytes("ISO-8859-1"),"UTF-8");`
   - Request请求转发：forward,一种在服务器内部的资源跳转方式
     - 实现方式：
-      - `req.getRequestDispatcher("资源B路径").forward(req,resp);`
+      - `req.getRequestDispatcher("资源B路径").forward(req,resp);`（资源B路径不用加虚拟目录）
     - 请求转发资源间共享数据：使用Request对象
       - `void setAttribute(String name, Object o)`：存储数据到request域中
       - `Object getAttribute(String name)`：根据key，获取值
@@ -194,32 +198,13 @@ Servlet由Web服务器创建，Servlet方法由Web服务器调用。
       - 浏览器地址栏路径不发生变化
       - 只能转发到当前服务器的内部资源
       - 一次请求，可以在转发的资源间使用request共享数据
-  - 通用方式获取请求参数：提供一种统一获取请求参数的方式，从而统一doGet和doPost方法内的代码。
-    - `Map<String, String[]> getParameterMap(): 获取所有参数Map集合`
-    - `String[] getParameterValues(String name)：根据名称获取参数值(数组)`
-    - `String getParameter(String name): 根据名称获取参数值(单个值)`
-    - 使用通用方式获取请求参数后，屏蔽了GET和POST的请求方式代码的不同，则代码可以定义为如下格式：
-      ```java
-      doGet(){
-
-      }
-      doPost(){
-        this.doGet
-      }
-      ```
-    - 可以使用Servlet模板创建Servlet更高效
-  - 请求参数中中文乱码处理
-    - Post:设置输入流的编码
-      request.setCharacterEncoding("UTF-8");
-    - Get:先编码，再解码
-      `new String(username.getBytes("ISO-8859-1"),"UTF-8");`
 - Response：设置响应数据
   - 设置响应数据功能介绍
     - 响应数据分为3部分：
-      1. 相应行：`HTTP/1.1 200 OK`
+      1. 响应行：`HTTP/1.1 200 OK`
          - `void setStatus(int sc)`：设置响应状态码
       2. 响应头：`Content-Type:text/html`
-         - `void setHeader(String name, String value)`：设置相应头键值对
+         - `void setHeader(String name, String value)`：设置响应头键值对
       3. 响应体：`<html><head><head><body></body></html>`
          - `PrintWriter getWriter()`：获取字符输出流
          - `ServletOuputStream getOutputStream()`：获取字节输出流
@@ -232,7 +217,7 @@ Servlet由Web服务器创建，Servlet方法由Web服务器调用。
     - 重定向特点
       - 浏览器地址栏路径发生变化
       - 可以重定向到任意位置的资源（服务器内部、外部均可）
-      - 两次请求，不能在多个资源使用request共享数据
+      - 两次请求，说明有两个request域。不能在多个资源使用request共享数据
     - 路径问题
       - 明确路径谁使用：
         - 浏览器使用：需要加虚拟目录（项目访问路径）
@@ -254,7 +239,7 @@ Servlet由Web服务器创建，Servlet方法由Web服务器调用。
       2. 写数据
           `writer.write("aaa");`
     - 注意：
-      - 该流不需要关闭，随着相应结束，response对象销毁，由服务器关闭
+      - 该流不需要关闭，随着响应结束，response对象销毁，由服务器关闭
       - 中文数据乱码：原因通过Response获取的字符输出流默认编码：ISO-8859-1
         `resp.setContentType("text/html;charset=utf-8");`
   - 响应字节数据
@@ -272,6 +257,7 @@ Servlet由Web服务器创建，Servlet方法由Web服务器调用。
         while ((len = fis.read(buff)) != -1) {
           os.write(buff, 0, len);
         }
+        //4.关闭输入流
         fis.close();
         ```
         这个方法很麻烦，经过引用commons-io的依赖后，第三步可以替换为：

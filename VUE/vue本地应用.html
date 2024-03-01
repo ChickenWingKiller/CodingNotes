@@ -28,6 +28,7 @@
         <p v-if="age >= 18">v-if</p>
         <!-- v-bind:为元素绑定属性，完整写法为v-bind:属性名，简写为:属性名 -->
         <img v-bind:src="imgSrc" alt="" :class="{active:isActive}">
+        <!-- <img v-bind:src="imgSrc" alt="" :class='active'> -->
         <img :src="imgSrc" alt="" :class="isActive ? 'active' : ''" @click = "toggleActive">
         <!-- v-for:根据数据生成列表结构 -->
         <ul>
@@ -46,7 +47,7 @@
         <!-- 事件后跟上.修饰符可以对事件进行限制 -->
         <input type="text" @keyup.enter="sayHi">
         <br>
-        <!-- v-model:便捷地设置和获取表单元素的值，绑定的数据回和表单元素值相关联 -->
+        <!-- v-model:便捷地设置和获取表单元素的值，绑定的数据会和表单元素值相关联 -->
         <input type="text" v-model="message1">
         <h2>{{message1}}</h2>
         <input type="button" value="修改message1" @click="setM">

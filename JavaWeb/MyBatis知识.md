@@ -14,7 +14,7 @@
     * 定义POJO类
     * 加载核心配置文件，获取SqlSessionFactory对象
     * 获取SqlSession对象，执行SQL语句
-    * 释放资源 
+    * 释放资源
 ## 解决SQL映射文件的警告信息
 * 产生原因：Idea和数据库没有建立连接，不识别表信息。
 * 解决方式：在Idea中配置MySQL数据库连接。
